@@ -62,7 +62,7 @@ You can customize your own access control model by combining the available model
 
 For example, you can get RBAC roles and ABAC attributes together inside one model and share one set of policy rules.
 
-The most basic and simplest model in Casbin is ACL. ACL's model CONF is:
+The most basic and simplest model in God is ACL. ACL's model CONF is:
 
 ```ini
 # Request definition
