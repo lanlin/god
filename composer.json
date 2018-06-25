@@ -1,0 +1,30 @@
+{
+  "name": "lanlin/god",
+  "type": "library",
+  "description": "An authority proving system that supports ACL, RBAC, ABAC",
+  "keywords": ["ACL", "RBAC", "ABAC", "Permission", "Authorization", "PHP", "RESTful"],
+  "homepage": "https://github.com/lanlin/god",
+  "license": "MIT",
+  "authors" : [
+    {
+      "name": "lanlin",
+      "email": "lanlin1987@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.0",
+    "monolog/monolog": "^1.23",
+    "symfony/expression-language": "^4.1"
+  },
+  "require-dev": {
+    "ext-mongodb": "^1.4",
+    "mongodb/mongodb": "^1.2",
+    "phpunit/phpunit": "^7.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "God\\": "src/",
+      "GodTests\\": "tests/"
+    }
+  }
+}
