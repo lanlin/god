@@ -4,3 +4,4 @@ p, data_group_admin, data_group, write
 g, alice, data_group_admin
 g2, data1, data_group
 g2, data2, data_group
+g2, data3, data_group

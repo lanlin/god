@@ -27,22 +27,6 @@ class Model extends Policy
     // ------------------------------------------------------------------------------
 
     /**
-     * @param Model  $model
-     * @param Config $cfg
-     * @param string $sec
-     * @param string $key
-     * @return bool
-     */
-    private function loadAssertion(Model $model, Config $cfg, string $sec, string $key) : bool
-    {
-        $value = $cfg->getString(Consts::SECTION_MAP[$sec] .Consts::CONFIG_SPLIT. $key);
-
-        return $model->addDef($sec, $key, $value);
-    }
-
-    // ------------------------------------------------------------------------------
-
-    /**
      * addDef adds an assertion to the model.
      *
      * @param string $sec the section, "p" or "g".
@@ -83,28 +67,6 @@ class Model extends Policy
         $this->model[$sec][$key] = $ast;
 
         return true;
-    }
-
-    // ------------------------------------------------------------------------------
-
-    /**
-     * @param \God\Model\Model   $model
-     * @param \God\Config\Config $cfg
-     * @param string                          $sec
-     */
-    private function loadSection(Model $model, Config $cfg, string $sec) : void
-    {
-        $i = 1;
-
-        while (true)
-        {
-            $key  = $i === 1 ? $sec : $sec.$i;  // key, key1, key2...
-            $temp = $this->loadAssertion($model, $cfg, $sec, $key);
-
-            if (!$temp) { break; }
-
-            $i++;
-        }
     }
 
     // ------------------------------------------------------------------------------
@@ -158,6 +120,44 @@ class Model extends Policy
             {
                 Util::logPrintf('%s.%s: %s', $key, $key2, $val2->value);
             }
+        }
+    }
+
+    // ------------------------------------------------------------------------------
+
+    /**
+     * @param Model  $model
+     * @param Config $cfg
+     * @param string $sec
+     * @param string $key
+     * @return bool
+     */
+    private function loadAssertion(Model $model, Config $cfg, string $sec, string $key) : bool
+    {
+        $value = $cfg->getString(Consts::SECTION_MAP[$sec] .Consts::CONFIG_SPLIT. $key);
+
+        return $model->addDef($sec, $key, $value);
+    }
+
+    // ------------------------------------------------------------------------------
+
+    /**
+     * @param \God\Model\Model   $model
+     * @param \God\Config\Config $cfg
+     * @param string                          $sec
+     */
+    private function loadSection(Model $model, Config $cfg, string $sec) : void
+    {
+        $i = 1;
+
+        while (true)
+        {
+            $key  = $i === 1 ? $sec : $sec.$i;  // key, key1, key2...
+            $temp = $this->loadAssertion($model, $cfg, $sec, $key);
+
+            if (!$temp) { break; }
+
+            $i++;
         }
     }
 

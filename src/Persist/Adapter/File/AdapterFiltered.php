@@ -20,6 +20,8 @@ class AdapterFiltered extends Adapter implements AdapterFilteredInterface
     // ------------------------------------------------------------------------------
 
     /**
+     * is filtered
+     *
      * @var bool
      */
     private $filtered = false;
@@ -27,13 +29,25 @@ class AdapterFiltered extends Adapter implements AdapterFilteredInterface
     // ------------------------------------------------------------------------------
 
     /**
+     * filter conditions
+     *
+     * @var mixed
+     */
+    private $filter = null;
+
+    // ------------------------------------------------------------------------------
+
+    /**
      * AdapterFiltered constructor.
      *
      * @param string $filePath
+     * @param mixed $filter
      */
-    public function __construct(string $filePath)
+    public function __construct(string $filePath, $filter = null)
     {
         parent::__construct($filePath);
+
+        $this->filter = $filter;
     }
 
     // ------------------------------------------------------------------------------
@@ -59,7 +73,9 @@ class AdapterFiltered extends Adapter implements AdapterFilteredInterface
     {
         $this->filtered = false;
 
-        parent::loadPolicy($model);
+        empty($this->filter) ?
+        parent::loadPolicy($model) :
+        $this->loadFilteredPolicy($model, $this->filter);
     }
 
     // ------------------------------------------------------------------------------

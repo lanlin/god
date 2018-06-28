@@ -46,37 +46,6 @@ class DefaultRoleManager implements RoleManager
     // ------------------------------------------------------------------------------
 
     /**
-     * @param string $name
-     * @return bool
-     */
-    private function hasRole(string $name) : bool
-    {
-        return isset($this->allRoles[$name]);
-    }
-
-    // ------------------------------------------------------------------------------
-
-    /**
-     * @param string $name
-     * @return \God\Rbac\DefaultRole
-     */
-    private function createRole(string $name) : DefaultRole
-    {
-        if ($this->hasRole($name))
-        {
-            return $this->allRoles[$name];
-        }
-
-        $role = new DefaultRole($name);
-
-        $this->allRoles[$name] = $role;
-
-        return $role;
-    }
-
-    // ------------------------------------------------------------------------------
-
-    /**
      * clear clears all stored data and resets the role manager to the initial state.
      */
     public function clear() : void
@@ -275,6 +244,37 @@ class DefaultRoleManager implements RoleManager
         {
             Util::logPrint( print_r($role, true) );
         }
+    }
+
+    // ------------------------------------------------------------------------------
+
+    /**
+     * @param string $name
+     * @return bool
+     */
+    private function hasRole(string $name) : bool
+    {
+        return isset($this->allRoles[$name]);
+    }
+
+    // ------------------------------------------------------------------------------
+
+    /**
+     * @param string $name
+     * @return \God\Rbac\DefaultRole
+     */
+    private function createRole(string $name) : DefaultRole
+    {
+        if ($this->hasRole($name))
+        {
+            return $this->allRoles[$name];
+        }
+
+        $role = new DefaultRole($name);
+
+        $this->allRoles[$name] = $role;
+
+        return $role;
     }
 
     // ------------------------------------------------------------------------------
