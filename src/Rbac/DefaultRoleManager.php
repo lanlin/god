@@ -273,7 +273,7 @@ class DefaultRoleManager implements RoleManager
     {
         foreach ($this->allRoles as $role)
         {
-            Util::logPrint( var_export($role, true) );
+            Util::logPrint( print_r($role, true) );
         }
     }
 
