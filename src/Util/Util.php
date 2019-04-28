@@ -155,8 +155,8 @@ class Util
      */
     public static function arrayEquals(array $a, array $b) : bool
     {
-        $a === null AND $a = [];
-        $b === null AND $b = [];
+        $a === null && $a = [];
+        $b === null && $b = [];
 
         if (count($a) !== count($b))
         {
@@ -187,8 +187,8 @@ class Util
      */
     public static function array2DEquals(array $a, array $b) : bool
     {
-        $a === null AND $a = [];
-        $b === null AND $b = [];
+        $a === null && $a = [];
+        $b === null && $b = [];
 
         if (count($a) !== count($b))
         {
@@ -219,8 +219,8 @@ class Util
      */
     public static function setEquals(array $a, array $b) : bool
     {
-        $a === null AND $a = [];
-        $b === null AND $b = [];
+        $a === null && $a = [];
+        $b === null && $b = [];
 
         if (count($a) !== count($b))
         {

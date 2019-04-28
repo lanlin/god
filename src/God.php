@@ -77,9 +77,9 @@ class God extends Management
             $bothStr = is_string($params[0]) && is_string($params[1]);
             $bothObj = is_object($params[0]) && is_object($params[1]);
 
-            $bothStr === true     AND $this->initWithFile(...$params);
-            $bothObj === true     AND $this->initWithModelAndAdapter(...$params);
-            $bothStr === $bothObj AND $this->initWithAdapter(...$params);
+            $bothStr === true     && $this->initWithFile(...$params);
+            $bothObj === true     && $this->initWithModelAndAdapter(...$params);
+            $bothStr === $bothObj && $this->initWithAdapter(...$params);
             return;
         }
 
