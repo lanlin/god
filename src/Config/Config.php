@@ -1,6 +1,6 @@
 <?php namespace God\Config;
 
-use God\Exception\GodException;
+use God\Exception\GodConfigException;
 
 /**
  * ------------------------------------------------------------------------------------
@@ -10,7 +10,7 @@ use God\Exception\GodException;
  * @tips Remove all "\r" character from the buffer string, & get a line with "\n".
  *
  * @author lanlin
- * @change 2018/06/13
+ * @change 2019/07/30
  */
 class Config
 {
@@ -36,7 +36,14 @@ class Config
     {
         $c = new self();
 
-        $c->parse($confName);
+        try
+        {
+            $c->parse($confName);
+        }
+        catch (\Throwable $e)
+        {
+            throw new GodConfigException($e->getMessage(), $e->getCode(), $e);
+        }
 
         return $c;
     }
@@ -53,7 +60,14 @@ class Config
     {
         $c = new self();
 
-        $c->parseBuffer($text);
+        try
+        {
+            $c->parseBuffer($text);
+        }
+        catch (\Throwable $e)
+        {
+            throw new GodConfigException($e->getMessage(), $e->getCode(), $e);
+        }
 
         return $c;
     }
@@ -120,13 +134,13 @@ class Config
     /**
      * @param string $key
      * @param string $value
-     * @throws GodException
+     * @throws GodConfigException
      */
     public function set(string $key, string $value) : void
     {
         if (strlen($key) === 0)
         {
-            throw new GodException('key is empty');
+            throw new GodConfigException('key is empty');
         }
 
         $keys = explode(Consts::CONFIG_SPLIT, strtolower($key));
@@ -235,7 +249,7 @@ class Config
 
     /**
      * @param string $strBuffer
-     * @throws GodException
+     * @throws GodConfigException
      */
     private function parseBuffer(string $strBuffer) : void
     {
@@ -272,7 +286,7 @@ class Config
                 $fmt = 'parse the content error : line %d , %s = ? ';
                 $msg = sprintf($fmt, $lineNum, $optionVal[0]);
 
-                throw new GodException($msg);
+                throw new GodConfigException($msg);
             }
 
             $this->addConfig($section, trim($optionVal[0]), trim($optionVal[1]));
