@@ -84,10 +84,16 @@ class Util
      */
     public static function escapeAssertion(string $s) : string
     {
-        $s = str_replace(Consts::R.'.', Consts::R.'_', $s);
-        $s = str_replace(Consts::P.'.', Consts::P.'_', $s);
+        // replace the first dot, because the string doesn't start with "m="
+        // and is not covered by the regex.
+        if (strpos($s, Consts::R) === 0 || strpos($s, Consts::P) === 0)
+        {
+            $s = preg_replace('@\.@', '_', $s, 1);
+        }
 
-        return $s;
+        $regex = '@(\|| |=|\)|\(|&|<|>|,|\+|-|!|\*|\/)('.Consts::R.'|'.Consts::P.')(\.)@';
+
+        return preg_replace($regex, $s, '$0$1_');
     }
 
     // ------------------------------------------------------------------------------
@@ -100,7 +106,11 @@ class Util
      */
     public static function removeComments(string $s) : string
     {
-        return $s;
+        $pos = strpos($s, Consts::DEFAULT_COMMENT);
+
+        if ($pos === false) { return $s; }
+
+        return trim(substr($s, 0, $pos));
     }
 
     // ------------------------------------------------------------------------------
