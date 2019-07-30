@@ -8,7 +8,7 @@ use God\Exception\GodNotImplemented;
  * ------------------------------------------------------------------------------------
  *
  * @author lanlin
- * @change 2018/06/13
+ * @change 2019/07/30
  */
 class Internal extends Core
 {
@@ -36,9 +36,9 @@ class Internal extends Core
         {
             $this->adapter->addPolicy($sec, $ptype, $rule);
         }
-        catch (GodNotImplemented $e)
+        catch (\Throwable $e)
         {
-            // ignore not implemented
+            if ($e instanceof GodNotImplemented) { throw $e; }
         }
 
         if ($this->watcher !== null)
@@ -72,9 +72,9 @@ class Internal extends Core
         {
             $this->adapter->removePolicy($sec, $ptype, $rule);
         }
-        catch (GodNotImplemented $e)
+        catch (\Throwable $e)
         {
-            // ignore not implemented
+            if ($e instanceof GodNotImplemented) { throw $e; }
         }
 
         if ($this->watcher !== null)
@@ -111,9 +111,9 @@ class Internal extends Core
         {
             $this->adapter->removeFilteredPolicy($sec, $ptype, $fieldIndex, ...$fieldValues);
         }
-        catch (GodNotImplemented $e)
+        catch (\Throwable $e)
         {
-            // ignore not implemented
+            if ($e instanceof GodNotImplemented) { throw $e; }
         }
 
         if ($this->watcher !== null)

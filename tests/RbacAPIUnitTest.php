@@ -124,6 +124,48 @@ class RbacAPIUnitTest extends TestCase
         TestUtil::testEnforceWithoutUsers($e, 'bob', 'write', false);
     }
 
+
+    // ------------------------------------------------------------------------------
+
+    public function testImplicitRoleAPI()
+    {
+        $e = new God("examples/rbac_model.conf", "examples/rbac_with_hierarchy_policy.csv");
+
+        $b = ["admin", "data1_admin", "data2_admin"];
+        $c = $e->getImplicitRolesForUser("alice");
+
+        foreach ($b as $k => $v)
+        {
+            $this->assertEquals($v, $c[$k]);
+        }
+    }
+
+    // ------------------------------------------------------------------------------
+
+    public function testImplicitPermissionAPI()
+    {
+        $e = new God("examples/rbac_model.conf", "examples/rbac_with_hierarchy_policy.csv");
+
+        $b =
+        [
+            ["alice", "data1", "read"],
+            ["data1_admin", "data1", "read"],
+            ["data1_admin", "data1", "write"],
+            ["data2_admin", "data2", "read"],
+            ["data2_admin", "data2", "write"]
+        ];
+
+        $c = $e->getImplicitPermissionsForUser("alice");
+
+        foreach ($b as $k1 => $v1)
+        {
+            foreach ($v1 as $k2 => $v2)
+            {
+                $this->assertEquals($v2, $c[$k1][$k2]);
+            }
+        }
+     }
+
     // ------------------------------------------------------------------------------
 
 }
