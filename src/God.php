@@ -398,6 +398,70 @@ class God extends Management
     // ------------------------------------------------------------------------------
 
     /**
+     * getImplicitRolesForUser gets implicit roles that a user has.
+     * Compared to getRolesForUser(), this function retrieves indirect roles besides direct roles.
+     *
+     * For example:
+     * g, alice, role:admin
+     * g, role:admin, role:user
+     * <p>
+     * getRolesForUser("alice") can only get: ["role:admin"].
+     * But getImplicitRolesForUser("alice") will get: ["role:admin", "role:user"].
+     *
+     * @param string $name
+     * @param mixed  ...$domain
+     * @return array
+     */
+    public function getImplicitRolesForUser(string $name, ...$domain)
+    {
+        $res   = [];
+        $roles = $this->rm->getRoles($name, $domain);
+
+        foreach ($roles as $n)
+        {
+            $tmp = $this->getImplicitRolesForUser($n, $domain);
+
+            $res = array_merge($res, $tmp);
+        }
+
+        return $res;
+    }
+
+    // ------------------------------------------------------------------------------
+
+    /**
+     * getImplicitPermissionsForUser gets implicit permissions for a user or role.
+     * Compared to getPermissionsForUser(), this function retrieves permissions for inherited roles.
+     *
+     * For example:
+     * p, admin, data1, read
+     * p, alice, data2, read
+     * g, alice, admin
+     * <p>
+     * getPermissionsForUser("alice") can only get: [["alice", "data2", "read"]].
+     * But getImplicitPermissionsForUser("alice") will get: [["admin", "data1", "read"], ["alice", "data2", "read"]].
+     *
+     * @param string $user
+     * @return array
+     */
+    public function getImplicitPermissionsForUser(string $user)
+    {
+        $res   = [];
+        $roles = $this->getImplicitRolesForUser($user);
+        $roles = array_merge([$user], $roles);
+
+        foreach ($roles as $n)
+        {
+            $tmp = $this->getPermissionsForUser($n);
+            $res = array_merge($res, $tmp);
+        }
+
+        return $res;
+    }
+
+    // ------------------------------------------------------------------------------
+
+    /**
      * initializes with a model file and a policy file
      *
      * @param string $modelPath
