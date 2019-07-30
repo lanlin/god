@@ -25,28 +25,24 @@ class Internal extends Core
      */
     protected function addPolicyInternal(string $sec, string $ptype, array $rule) : bool
     {
-        $ruleAdded = $this->model->addPolicy($sec, $ptype, $rule);
-
-        if (!$ruleAdded || $this->adapter === null || !$this->autoSave)
+        if (!$this->adapter && $this->autoSave)
         {
-            return $ruleAdded;
+            try
+            {
+                $this->adapter->addPolicy($sec, $ptype, $rule);
+            }
+            catch (\Throwable $e)
+            {
+                if ($e instanceof GodNotImplemented) { throw $e; }
+            }
+
+            if ($this->watcher !== null)
+            {
+                $this->watcher->update();
+            }
         }
 
-        try
-        {
-            $this->adapter->addPolicy($sec, $ptype, $rule);
-        }
-        catch (\Throwable $e)
-        {
-            if ($e instanceof GodNotImplemented) { throw $e; }
-        }
-
-        if ($this->watcher !== null)
-        {
-            $this->watcher->update();
-        }
-
-        return $ruleAdded;
+        return $this->model->addPolicy($sec, $ptype, $rule);
     }
 
     // ------------------------------------------------------------------------------
@@ -61,28 +57,25 @@ class Internal extends Core
      */
     protected function removePolicyInternal(string $sec, string $ptype, array $rule) : bool
     {
-        $ruleRemoved = $this->model->removePolicy($sec, $ptype, $rule);
 
-        if (!$ruleRemoved || $this->adapter === null || !$this->autoSave)
+        if (!$this->adapter && $this->autoSave)
         {
-            return $ruleRemoved;
+            try
+            {
+                $this->adapter->removePolicy($sec, $ptype, $rule);
+            }
+            catch (\Throwable $e)
+            {
+                if ($e instanceof GodNotImplemented) { throw $e; }
+            }
+
+            if ($this->watcher !== null)
+            {
+                $this->watcher->update();
+            }
         }
 
-        try
-        {
-            $this->adapter->removePolicy($sec, $ptype, $rule);
-        }
-        catch (\Throwable $e)
-        {
-            if ($e instanceof GodNotImplemented) { throw $e; }
-        }
-
-        if ($this->watcher !== null)
-        {
-            $this->watcher->update();
-        }
-
-        return $ruleRemoved;
+        return $this->model->removePolicy($sec, $ptype, $rule);
     }
 
     // ------------------------------------------------------------------------------
@@ -100,28 +93,24 @@ class Internal extends Core
     {
         $fieldValues = is_array($fieldValues[0]) ? $fieldValues[0] : $fieldValues;
 
-        $ruleRemoved = $this->model->removeFilteredPolicy($sec, $ptype, $fieldIndex, ...$fieldValues);
-
-        if (!$ruleRemoved || $this->adapter === null || !$this->autoSave)
+        if (!$this->adapter && $this->autoSave)
         {
-            return $ruleRemoved;
+            try
+            {
+                $this->adapter->removeFilteredPolicy($sec, $ptype, $fieldIndex, ...$fieldValues);
+            }
+            catch (\Throwable $e)
+            {
+                if ($e instanceof GodNotImplemented) { throw $e; }
+            }
+
+            if ($this->watcher !== null)
+            {
+                $this->watcher->update();
+            }
         }
 
-        try
-        {
-            $this->adapter->removeFilteredPolicy($sec, $ptype, $fieldIndex, ...$fieldValues);
-        }
-        catch (\Throwable $e)
-        {
-            if ($e instanceof GodNotImplemented) { throw $e; }
-        }
-
-        if ($this->watcher !== null)
-        {
-            $this->watcher->update();
-        }
-
-        return $ruleRemoved;
+        return $this->model->removeFilteredPolicy($sec, $ptype, $fieldIndex, ...$fieldValues);
     }
 
     // ------------------------------------------------------------------------------

@@ -381,7 +381,7 @@ class Core
      * the operation "action", input parameters are usually: (sub, obj, act).
      *
      * @param mixed ...$rvals the request needs to be mediated, usually an array
-     *              of strings, can be class instances if RBAC is used.
+     *              of strings, can be class instances if ABAC is used.
      * @return bool whether to allow the request.
      */
     public function allows(...$rvals) : bool
