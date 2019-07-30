@@ -21,14 +21,14 @@ class DefaultRoleManager implements RoleManager
     /**
      * @var array
      */
-    private $allRoles = [];
+    protected $allRoles = [];
 
     // ------------------------------------------------------------------------------
 
     /**
      * @var int
      */
-    private $maxHierarchyLevel;
+    protected $maxHierarchyLevel;
 
     // ------------------------------------------------------------------------------
 
@@ -252,7 +252,7 @@ class DefaultRoleManager implements RoleManager
      * @param string $name
      * @return bool
      */
-    private function hasRole(string $name) : bool
+    protected function hasRole(string $name) : bool
     {
         return isset($this->allRoles[$name]);
     }
@@ -263,7 +263,7 @@ class DefaultRoleManager implements RoleManager
      * @param string $name
      * @return \God\Rbac\DefaultRole
      */
-    private function createRole(string $name) : DefaultRole
+    protected function createRole(string $name) : DefaultRole
     {
         if ($this->hasRole($name))
         {
