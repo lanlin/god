@@ -74,6 +74,44 @@ class Policy
     // ------------------------------------------------------------------------------
 
     /**
+     * savePolicyToText saves the policy to the text.
+     *
+     * @return string the policy text.
+     */
+    public function savePolicyToText() : string
+    {
+        $res = '';
+
+        if (isset($this->model[Consts::P]))
+        {
+            foreach ($this->model[Consts::P] as $key => $ast)
+            {
+                foreach ($ast->policy as $rule)
+                {
+                    $val  = implode(', ', $rule);
+                    $res .= "{$key}, $val\n";
+                }
+            }
+        }
+
+        if (isset($this->model[Consts::G]))
+        {
+            foreach ($this->model[Consts::G] as $key => $ast)
+            {
+                foreach ($ast->policy as $rule)
+                {
+                    $val  = implode(', ', $rule);
+                    $res .= "{$key}, {$val}\n";
+                }
+            }
+        }
+
+        return $res;
+    }
+
+    // ------------------------------------------------------------------------------
+
+    /**
      * clearPolicy clears all current policy.
      */
     public function clearPolicy() : void
