@@ -108,6 +108,34 @@ class Model extends Policy
     // ------------------------------------------------------------------------------
 
     /**
+     * saveModelToText saves the model to the text.
+     *
+     * @return string the model text.
+     */
+    public function saveModelToText() : string
+    {
+        $g = $this->saveSectionToText(Consts::G);
+        $g = str_replace($g, '.', '_');
+
+        $res  = '';
+        $res .= $this->saveSectionToText(Consts::R);
+        $res .= Consts::LINE_BREAK_KEEPED;
+        $res .= $this->saveSectionToText(Consts::P);
+        $res .= Consts::LINE_BREAK_KEEPED;
+        $res .= $g;
+
+        if (!$g) { $res .= Consts::LINE_BREAK_KEEPED; }
+
+        $res .= $this->saveSectionToText(Consts::E);
+        $res .= Consts::LINE_BREAK_KEEPED;
+        $res .= $this->saveSectionToText(Consts::M);
+
+        return $res;
+    }
+
+    // ------------------------------------------------------------------------------
+
+    /**
      * printModel prints the model to the log.
      */
     public function printModel() : void
@@ -159,6 +187,32 @@ class Model extends Policy
 
             $i++;
         }
+    }
+
+    // ------------------------------------------------------------------------------
+
+    /**
+     * saveSectionToText saves the section to the text.
+     *
+     * @param string $sec
+     * @return string the section text.
+     */
+    private function saveSectionToText(string $sec) : string
+    {
+        $res = "[" . Consts::SECTION_MAP[$sec] . "]\n";
+
+        $section = $this->model[$sec];
+
+        if ($section === null) { return ''; }
+
+        foreach ($section as $key => $val)
+        {
+            $val = str_replace($val, '_', '.');
+
+            $res .= "{$key} = {$val}\n";
+        }
+
+        return $res;
     }
 
     // ------------------------------------------------------------------------------
