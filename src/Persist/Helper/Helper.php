@@ -20,7 +20,7 @@ class Helper extends Fields implements HelperInterface
     /**
      * load line by string (file load)
      *
-     * @param string                        $line
+     * @param string $line
      * @param \God\Model\Model $model
      */
     public static function loadPolicyLine(string $line, Model $model) : void
@@ -45,7 +45,7 @@ class Helper extends Fields implements HelperInterface
     /**
      * load line by array (database load)
      *
-     * @param array                         $line
+     * @param array $line
      * @param \God\Model\Model $model
      */
     public static function loadPolicyLine2(array $line, Model $model) : void

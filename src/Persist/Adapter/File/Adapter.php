@@ -14,7 +14,7 @@ use God\Persist\Adapter as AdapterInterface;
  * ------------------------------------------------------------------------------------
  *
  * @author lanlin
- * @change 2018/06/13
+ * @change 2019/07/30
  */
 class Adapter implements AdapterInterface
 {
@@ -47,12 +47,17 @@ class Adapter implements AdapterInterface
      */
     public function loadPolicy(Model $model) : void
     {
-        if (!$this->filePath)
+        if (!empty($this->filePath))
         {
-            throw new GodException('invalid file path, file path cannot be empty');
+            try
+            {
+                $this->loadPolicyData($model);
+            }
+            catch (\Throwable $e)
+            {
+                throw new GodException('file operator error', $e->getCode());
+            }
         }
-
-        $this->loadPolicyFile($model);
     }
 
     // ------------------------------------------------------------------------------
@@ -69,29 +74,13 @@ class Adapter implements AdapterInterface
             throw new GodException('invalid file path, file path cannot be empty');
         }
 
-        $tmp = '';
+        $p = $this->getModelPolicy($model, Consts::P);
+        $g = $this->getModelPolicy($model, Consts::G);
 
-        foreach ($model->model[Consts::P] as $ptype => $ast)
-        {
-            foreach ($ast->policy as $rule)
-            {
-                $tmp .= $ptype . Consts::IMPLODE_DELIMITER;
-                $tmp .= Util::arrayToString($rule);
-                $tmp .= Consts::LINE_BREAK_KEEPED;
-            }
-        }
+        $policy = array_merge($p, $g);
+        $policy = implode("\n", $policy);
 
-        foreach ($model->model[Consts::G] as $ptype => $ast)
-        {
-            foreach ($ast->policy as $rule)
-            {
-                $tmp .= $ptype . Consts::IMPLODE_DELIMITER;
-                $tmp .= Util::arrayToString($rule);
-                $tmp .= Consts::LINE_BREAK_KEEPED;
-            }
-        }
-
-        $this->savePolicyFile(trim($tmp));
+        $this->savePolicyFile($policy);
     }
 
     // ------------------------------------------------------------------------------
@@ -143,12 +132,42 @@ class Adapter implements AdapterInterface
     // ------------------------------------------------------------------------------
 
     /**
-     * load policy from file
+     * get model policy
+     *
+     * @param \God\Model\Model $model
+     * @param string           $ptype
+     * @return array
+     */
+    private function getModelPolicy(Model $model, string $ptype)
+    {
+        $policy = [];
+        $ptypes = $model->model[$ptype];
+
+        forEach($ptypes as $k => $v)
+        {
+            $p = $v->policy;
+
+            foreach ($p as &$x)
+            {
+                $x = "{$k}, " . Util::arrayToString($x);
+            }
+
+            $policy = array_merge($policy, $p);
+        }
+
+        return $policy;
+    }
+
+
+    // ------------------------------------------------------------------------------
+
+    /**
+     * load policy data
      *
      * @param \God\Model\Model $model
      * @throws \God\Exception\GodException
      */
-    private function loadPolicyFile(Model $model) : void
+    private function loadPolicyData(Model $model)
     {
         try
         {
@@ -161,9 +180,9 @@ class Adapter implements AdapterInterface
 
             fclose($fp);
         }
-        catch (\Exception $e)
+        catch (\Throwable $e)
         {
-            throw new GodException($e->getMessage());
+            throw new GodException('Policy load error');
         }
     }
 
@@ -184,9 +203,9 @@ class Adapter implements AdapterInterface
             fwrite($fp, $text);
             fclose($fp);
         }
-        catch (\Exception $e)
+        catch (\Throwable $e)
         {
-            throw new GodException($e->getMessage());
+            throw new GodException('Policy save error');
         }
     }
 
