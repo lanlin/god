@@ -21,45 +21,47 @@ use Symfony\Component\ExpressionLanguage\ExpressionLanguage as Express;
  * ------------------------------------------------------------------------------------
  *
  * @author lanlin
- * @change 2018/06/14
+ * @change 2019/07/30
  */
 class Core
 {
 
     // ------------------------------------------------------------------------------
 
-    /** @var Model */
-    public $model;
-
-    /** @var string */
-    public $modelPath;
-
-    /** @var FunctionMap */
-    public $fm;
-
     /** @var Effector */
     private $eft;
-
-    /** @var Adapter */
-    public $adapter;
-
-    /** @var Watcher */
-    public $watcher;
-
-    /** @var RoleManager */
-    private $rm;
 
     /** @var bool */
     private $enabled;
 
-    /** @var bool */
-    public $autoSave;
-
-    /** @var bool */
-    public $autoBuildRoleLinks;
-
     /** @var array */
     private $functions = [];
+
+    // ------------------------------------------------------------------------------
+
+    /** @var FunctionMap */
+    protected $fm;
+
+    /** @var RoleManager */
+    protected $rm;
+
+    /** @var Adapter */
+    protected $adapter;
+
+    /** @var Model */
+    protected $model;
+
+    /** @var string */
+    protected $modelPath;
+
+    /** @var Watcher */
+    protected $watcher;
+
+    /** @var bool */
+    protected $autoSave;
+
+    /** @var bool */
+    protected $autoBuildRoleLinks;
 
     // ------------------------------------------------------------------------------
 
@@ -379,7 +381,7 @@ class Core
      * the operation "action", input parameters are usually: (sub, obj, act).
      *
      * @param mixed ...$rvals the request needs to be mediated, usually an array
-     *              of strings, can be class instances if ABAC is used.
+     *              of strings, can be class instances if RBAC is used.
      * @return bool whether to allow the request.
      */
     public function allows(...$rvals) : bool
