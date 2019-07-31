@@ -45,7 +45,7 @@ class Fields
      * @param int   $start
      * @return array
      */
-    public static function formatValues(array $value, int $start = 0)
+    public static function formatValues(array $value, int $start = 0) : array
     {
         $temp  = [];
         $value = array_values($value);
@@ -98,7 +98,7 @@ class Fields
      * @param array $line
      * @throws \God\Exception\GodException
      */
-    public static function validateFields(array $line)
+    public static function validateFields(array $line) : void
     {
         unset($line['_id']);
 

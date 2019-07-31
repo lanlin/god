@@ -178,7 +178,7 @@ class God extends Management
      * @param string $role the role.
      * @return bool succeeds or not.
      */
-    public function deleteRoleForUser(string $user, string $role)
+    public function deleteRoleForUser(string $user, string $role) : bool
     {
         return $this->removeGroupingPolicy($user, $role);
     }
@@ -412,15 +412,13 @@ class God extends Management
      * @param mixed  ...$domain
      * @return array
      */
-    public function getImplicitRolesForUser(string $name, ...$domain)
+    public function getImplicitRolesForUser(string $name, ...$domain) : array
     {
-        $res   = [];
-        $roles = $this->rm->getRoles($name, $domain);
+        $res = $roles = $this->rm->getRoles($name, ...$domain);
 
         foreach ($roles as $n)
         {
-            $tmp = $this->getImplicitRolesForUser($n, $domain);
-
+            $tmp = $this->getImplicitRolesForUser($n, ...$domain);
             $res = array_merge($res, $tmp);
         }
 
@@ -444,7 +442,7 @@ class God extends Management
      * @param string $user
      * @return array
      */
-    public function getImplicitPermissionsForUser(string $user)
+    public function getImplicitPermissionsForUser(string $user) : array
     {
         $res   = [];
         $roles = $this->getImplicitRolesForUser($user);
@@ -467,7 +465,7 @@ class God extends Management
      * @param string $modelPath
      * @param string $policyPath
      */
-    private function initWithFile(string $modelPath, string $policyPath)
+    private function initWithFile(string $modelPath, string $policyPath) : void
     {
         if (!$policyPath)
         {
@@ -482,11 +480,10 @@ class God extends Management
     /**
      * initializes with a adapter
      *
-     *
-     * @param string                            $modelPath
+     * @param string $modelPath
      * @param \God\Persist\Adapter $adapter
      */
-    private function initWithAdapter(string $modelPath, Adapter $adapter)
+    private function initWithAdapter(string $modelPath, Adapter $adapter) : void
     {
         $this->modelPath = $modelPath;
 
@@ -503,7 +500,7 @@ class God extends Management
      * @param \God\Model\Model     $model
      * @param \God\Persist\Adapter $adapter
      */
-    private function initWithModelAndAdapter(Model $model, Adapter $adapter = null)
+    private function initWithModelAndAdapter(Model $model, Adapter $adapter = null) : void
     {
         $this->model   = $model;
         $this->adapter = $adapter;

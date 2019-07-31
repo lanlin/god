@@ -1,6 +1,5 @@
 <?php namespace GodTests;
 
-use God\God;
 use God\Util\Util;
 use PHPUnit\Framework\TestCase;
 
@@ -24,19 +23,19 @@ class UtilTest extends TestCase
      */
     public function testEscapeAssertion()
     {
-        assertEquals('r_attr.value == p_attr', Util::escapeAssertion('r.attr.value == p.attr'));
-        assertEquals('r_attp.value || p_attr', Util::escapeAssertion('r.attp.value || p.attr'));
-        assertEquals('r_attp.value &&p_attr', Util::escapeAssertion('r.attp.value &&p.attr'));
-        assertEquals('r_attp.value >p_attr', Util::escapeAssertion('r.attp.value >p.attr'));
-        assertEquals('r_attp.value <p_attr', Util::escapeAssertion('r.attp.value <p.attr'));
-        assertEquals('r_attp.value -p_attr', Util::escapeAssertion('r.attp.value -p.attr'));
-        assertEquals('r_attp.value +p_attr', Util::escapeAssertion('r.attp.value +p.attr'));
-        assertEquals('r_attp.value *p_attr', Util::escapeAssertion('r.attp.value *p.attr'));
-        assertEquals('r_attp.value /p_attr', Util::escapeAssertion('r.attp.value /p.attr'));
-        assertEquals('!r_attp.value /p_attr', Util::escapeAssertion('!r.attp.value /p.attr'));
-        assertEquals('g(r_sub, p_sub) == p_attr', Util::escapeAssertion('g(r.sub, p.sub) == p.attr'));
-        assertEquals('g(r_sub,p_sub) == p_attr', Util::escapeAssertion('g(r.sub,p.sub) == p.attr'));
-        assertEquals('(r_attp.value || p_attr)p_u', Util::escapeAssertion('(r.attp.value || p.attr)p.u'));
+        $this->assertEquals('r_attr.value == p_attr', Util::escapeAssertion('r.attr.value == p.attr'));
+        $this->assertEquals('r_attp.value || p_attr', Util::escapeAssertion('r.attp.value || p.attr'));
+        $this->assertEquals('r_attp.value &&p_attr', Util::escapeAssertion('r.attp.value &&p.attr'));
+        $this->assertEquals('r_attp.value >p_attr', Util::escapeAssertion('r.attp.value >p.attr'));
+        $this->assertEquals('r_attp.value <p_attr', Util::escapeAssertion('r.attp.value <p.attr'));
+        $this->assertEquals('r_attp.value -p_attr', Util::escapeAssertion('r.attp.value -p.attr'));
+        $this->assertEquals('r_attp.value +p_attr', Util::escapeAssertion('r.attp.value +p.attr'));
+        $this->assertEquals('r_attp.value *p_attr', Util::escapeAssertion('r.attp.value *p.attr'));
+        $this->assertEquals('r_attp.value /p_attr', Util::escapeAssertion('r.attp.value /p.attr'));
+        $this->assertEquals('!r_attp.value /p_attr', Util::escapeAssertion('!r.attp.value /p.attr'));
+        $this->assertEquals('g(r_sub, p_sub) == p_attr', Util::escapeAssertion('g(r.sub, p.sub) == p.attr'));
+        $this->assertEquals('g(r_sub,p_sub) == p_attr', Util::escapeAssertion('g(r.sub,p.sub) == p.attr'));
+        $this->assertEquals('(r_attp.value || p_attr)p_u', Util::escapeAssertion('(r.attp.value || p.attr)p.u'));
     }
 
     // ------------------------------------------------------------------------------
@@ -48,11 +47,11 @@ class UtilTest extends TestCase
      */
     public function testRemoveComments()
     {
-        assertEquals('r.act == p.act', Util::removeComments('r.act == p.act # comments'));
-        assertEquals('r.act == p.act', Util::removeComments('r.act == p.act#comments'));
-        assertEquals('r.act == p.act', Util::removeComments('r.act == p.act###'));
-        assertEquals('', Util::removeComments('### comments'));
-        assertEquals('r.act == p.act', Util::removeComments('r.act == p.act'));
+        $this->assertEquals('r.act == p.act', Util::removeComments('r.act == p.act # comments'));
+        $this->assertEquals('r.act == p.act', Util::removeComments('r.act == p.act#comments'));
+        $this->assertEquals('r.act == p.act', Util::removeComments('r.act == p.act###'));
+        $this->assertEquals('', Util::removeComments('### comments'));
+        $this->assertEquals('r.act == p.act', Util::removeComments('r.act == p.act'));
     }
 
     // ------------------------------------------------------------------------------

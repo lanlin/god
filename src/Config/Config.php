@@ -218,7 +218,7 @@ class Config
      * @param string $option
      * @param string $value
      */
-    private function addConfig(string $section, string $option, string $value)
+    private function addConfig(string $section, string $option, string $value) : void
     {
         if ($section === '')
         {

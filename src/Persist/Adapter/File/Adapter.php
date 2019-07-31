@@ -138,7 +138,7 @@ class Adapter implements AdapterInterface
      * @param string           $ptype
      * @return array
      */
-    private function getModelPolicy(Model $model, string $ptype)
+    private function getModelPolicy(Model $model, string $ptype) : array
     {
         $policy = [];
         $ptypes = $model->model[$ptype];
@@ -167,7 +167,7 @@ class Adapter implements AdapterInterface
      * @param \God\Model\Model $model
      * @throws \God\Exception\GodException
      */
-    private function loadPolicyData(Model $model)
+    private function loadPolicyData(Model $model) : void
     {
         try
         {

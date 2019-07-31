@@ -114,7 +114,7 @@ class AdapterFiltered extends Adapter implements AdapterFilteredInterface
      * @param \God\Model\Model $model
      * @param array $filter
      */
-    private function loadFilteredPolicyDB(Model $model, array $filter)
+    private function loadFilteredPolicyDB(Model $model, array $filter) : void
     {
         $arr = [];
 
@@ -137,7 +137,7 @@ class AdapterFiltered extends Adapter implements AdapterFilteredInterface
      * @return bool
      * @throws \God\Exception\GodException
      */
-    private function filterValidate($filter)
+    private function filterValidate($filter) : bool
     {
         if (empty($filter))
         {

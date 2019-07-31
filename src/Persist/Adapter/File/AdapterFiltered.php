@@ -190,7 +190,7 @@ class AdapterFiltered extends Adapter implements AdapterFilteredInterface
      * @return bool
      * @throws \God\Exception\GodException
      */
-    private function filterValidate($filter)
+    private function filterValidate($filter) : bool
     {
         if (!$this->filePath)
         {
@@ -219,7 +219,7 @@ class AdapterFiltered extends Adapter implements AdapterFilteredInterface
      * @param mixed $filter
      * @throws \God\Exception\GodException
      */
-    private function loadFilteredPolicyFile(Model $model, array $filter)
+    private function loadFilteredPolicyFile(Model $model, array $filter) : void
     {
         try
         {

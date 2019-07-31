@@ -47,7 +47,7 @@ abstract class AbstractFunction
      * @param string $pattern
      * @return string
      */
-    public static function getRegexPattern(string $pattern)
+    public static function getRegexPattern(string $pattern) : string
     {
         return Consts::REGEX_DELIMITER . $pattern . Consts::REGEX_DELIMITER;
     }

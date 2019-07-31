@@ -418,7 +418,7 @@ class Core
      *
      * @param \Symfony\Component\ExpressionLanguage\ExpressionLanguage $express
      */
-    private function loadFunctions(Express $express)
+    private function loadFunctions(Express $express) : void
     {
         foreach ($this->fm->fm as $key => $func)
         {
@@ -448,7 +448,7 @@ class Core
      * @param \Symfony\Component\ExpressionLanguage\ExpressionLanguage $express
      * @return bool
      */
-    private function sectionNoPolicy(array $rvals, Express $express)
+    private function sectionNoPolicy(array $rvals, Express $express) : bool
     {
         $parameters     = [];
         $policyEffects  = [];
@@ -486,7 +486,7 @@ class Core
      * @return bool
      * @throws \God\Exception\GodException
      */
-    private function sectionHasPolicy(array $rvals, Express $express)
+    private function sectionHasPolicy(array $rvals, Express $express) : bool
     {
         $policyEffects  = [];
         $matcherResults = [];
@@ -531,7 +531,7 @@ class Core
      * @param array $parameters
      * @param int   $key
      */
-    private function checkPolicyLeft(array &$policyEffects, array $parameters, int $key)
+    private function checkPolicyLeft(array &$policyEffects, array $parameters, int $key) : void
     {
         if (!isset($parameters[Consts::P.'_eft']))
         {
@@ -558,7 +558,7 @@ class Core
      * @return bool
      * @throws \God\Exception\GodException
      */
-    private function setPolicyEffects(array &$policyEffects, array &$matcherResults, int $key, $result)
+    private function setPolicyEffects(array &$policyEffects, array &$matcherResults, int $key, $result) : bool
     {
         if (!is_bool($result) && !is_int($result))
         {

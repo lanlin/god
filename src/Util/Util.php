@@ -257,7 +257,7 @@ class Util
      * @return \Monolog\Logger
      * @throws \Exception
      */
-    private static function getLoggerObj()
+    private static function getLoggerObj() : \Monolog\Logger
     {
         if (self::$logger)
         {

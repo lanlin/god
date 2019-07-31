@@ -53,7 +53,7 @@ class DefaultEffector implements Effector
      * @param array $effects
      * @return bool
      */
-    private function sectionA(array $effects)
+    private function sectionA(array $effects) : bool
     {
         foreach ($effects as $eft)
         {

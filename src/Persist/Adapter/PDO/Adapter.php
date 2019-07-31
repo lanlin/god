@@ -255,7 +255,7 @@ class Adapter implements AdapterInterface
      *
      * @return \PDOStatement
      */
-    private function getInsertPrepare()
+    private function getInsertPrepare() : \PDOStatement
     {
         $fields = implode(', ', Fields::FIELDS);
 
@@ -275,7 +275,7 @@ class Adapter implements AdapterInterface
      * @param array $where
      * @return \PDOStatement
      */
-    private function getDeletePrepare(array $where)
+    private function getDeletePrepare(array $where) : \PDOStatement
     {
         $arr = [];
 
@@ -297,7 +297,7 @@ class Adapter implements AdapterInterface
      *
      * @return string
      */
-    private function getTableSql()
+    private function getTableSql() : string
     {
         $fields = [];
 

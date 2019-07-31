@@ -511,7 +511,7 @@ class Management extends Internal
      *                    means not to match this field.
      * @return bool succeeds or not.
      */
-    public function removeFilteredGroupingPolicy(int $fieldIndex, ...$fieldValues)
+    public function removeFilteredGroupingPolicy(int $fieldIndex, ...$fieldValues) : bool
     {
         $fieldValues = is_array($fieldValues[0]) ? $fieldValues[0] : $fieldValues;
 
