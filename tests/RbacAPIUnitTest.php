@@ -129,10 +129,10 @@ class RbacAPIUnitTest extends TestCase
 
     public function testImplicitRoleAPI()
     {
-        $e = new God("examples/rbac_model.conf", "examples/rbac_with_hierarchy_policy.csv");
+        $e = new God(TestUtil::$path.'rbac_model.conf', TestUtil::$path.'rbac_with_hierarchy_policy.csv');
 
-        $b = ["admin", "data1_admin", "data2_admin"];
-        $c = $e->getImplicitRolesForUser("alice");
+        $b = ['admin', 'data1_admin', 'data2_admin'];
+        $c = $e->getImplicitRolesForUser('alice');
 
         foreach ($b as $k => $v)
         {
@@ -144,18 +144,18 @@ class RbacAPIUnitTest extends TestCase
 
     public function testImplicitPermissionAPI()
     {
-        $e = new God("examples/rbac_model.conf", "examples/rbac_with_hierarchy_policy.csv");
+        $e = new God(TestUtil::$path.'rbac_model.conf', TestUtil::$path.'rbac_with_hierarchy_policy.csv');
 
         $b =
         [
-            ["alice", "data1", "read"],
-            ["data1_admin", "data1", "read"],
-            ["data1_admin", "data1", "write"],
-            ["data2_admin", "data2", "read"],
-            ["data2_admin", "data2", "write"]
+            ['alice', 'data1', 'read'],
+            ['data1_admin', 'data1', 'read'],
+            ['data1_admin', 'data1', 'write'],
+            ['data2_admin', 'data2', 'read'],
+            ['data2_admin', 'data2', 'write']
         ];
 
-        $c = $e->getImplicitPermissionsForUser("alice");
+        $c = $e->getImplicitPermissionsForUser('alice');
 
         foreach ($b as $k1 => $v1)
         {
