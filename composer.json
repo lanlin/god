@@ -14,11 +14,9 @@
   "require": {
     "php": ">=7.2",
     "monolog/monolog": "^1.23",
-    "symfony/expression-language": "^4.1"
+    "symfony/expression-language": "^4.3"
   },
   "require-dev": {
-    "ext-mongodb": "^1.4",
-    "mongodb/mongodb": "^1.2",
     "phpunit/phpunit": "^7.2"
   },
   "autoload": {
