@@ -47,6 +47,7 @@ class Adapter implements AdapterInterface
     public function __construct(\PDO $pdo)
     {
         $this->pdo = $pdo;
+        $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 
         try
         {
@@ -259,6 +260,7 @@ class Adapter implements AdapterInterface
         $fields = implode(', ', Fields::FIELDS);
 
         $values = array_fill(0, count(Fields::FIELDS), '?');
+        $values = implode(', ', $values);
 
         $sql = "INSERT INTO `{$this->table}` ({$fields}) VALUES ({$values})";
 
@@ -279,7 +281,7 @@ class Adapter implements AdapterInterface
 
         foreach ($where as $key => $val)
         {
-            $arr[] = "`$key`='{$val}''";
+            $arr[] = "`$key`='{$val}'";
         }
 
         $str = implode(' AND', $arr);

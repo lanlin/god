@@ -19,20 +19,20 @@ class AdapterFiltered extends Adapter implements AdapterFilteredInterface
     // ------------------------------------------------------------------------------
 
     /**
-     * is filtered
-     *
-     * @var bool
-     */
-    private $filtered = false;
-
-    // ------------------------------------------------------------------------------
-
-    /**
      * filter conditions
      *
      * @var mixed
      */
     private $filter = null;
+
+    // ------------------------------------------------------------------------------
+
+    /**
+     * is filtered
+     *
+     * @var bool
+     */
+    private $filtered = false;
 
     // ------------------------------------------------------------------------------
 
@@ -120,7 +120,7 @@ class AdapterFiltered extends Adapter implements AdapterFilteredInterface
 
         foreach ($filter as $key => $val)
         {
-            $arr[] = "`$key`='{$val}''";
+            $arr[] = "`$key`='{$val}'";
         }
 
         $where = implode(' AND', $arr);
