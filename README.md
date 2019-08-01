@@ -37,6 +37,13 @@ For more detail, please refer to the documentation of [Casbin](https://github.co
 10. **Priority**: the policy rules can be prioritized like firewall rules.
 
 
+## Supported Adapters
+
+1. file adapter
+2. MongoDB adapter
+3. PHP PDO adapters (now support: MySQL, PostgreSQL, SQLite, SqlServer.)
+
+
 ## How it works?
 
 does "Who" as "Role" or "Group" from "Where" do "Operator" to "What" will got "How"?
@@ -115,9 +122,31 @@ new God(string $modelPath, Adapter $adapter);
 new God(Model $model);
 
 new God(Model $model, Adapter $adapter);
+
+
+// demo for mysql
+$dbHost   = "127.0.0.1";
+$dbPort   = 3306;
+$dbName   = "your_database_name";
+$username = "root";
+$password = "your_password";
+
+// php mysql pdo demo
+$pdo = new \PDO("mysql:host={$dbHost};port={$dbPort};dbname={$dbName}", $username, $password);
+
+// init god model with csv
+$g = new God('tests/Examples/rbac_model.conf', 'tests/Examples/rbac_policy.csv');
+$m = $g->getModel();
+
+// save policy to database
+$a = new Adapter($pdo);
+$a->savePolicy($m);
 ```
 
-For more usage demos, please view the tests.
+For more usage demos, please view the unit tests or
+
+[Casbin 中文文档](https://casbin.org/docs/zh-CN/overview)
+[Casbin Documents](https://casbin.org/docs/en/overview)
 
 
 ## License
