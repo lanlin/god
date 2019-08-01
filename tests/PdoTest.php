@@ -1,18 +1,18 @@
 <?php namespace GodTests;
 
 use God\God;
-use God\Persist\Adapter\MySQL\AdapterFiltered as Adapter;
+use God\Persist\Adapter\PDO\AdapterFiltered as Adapter;
 use PHPUnit\Framework\TestCase;
 
 /**
  * ------------------------------------------------------------------------------------
- * God MySQL Adapter Test
+ * God PDO Adapter Test
  * ------------------------------------------------------------------------------------
  *
  * @author lanlin
- * @change 2019/07/31
+ * @change 2019/08/01
  */
-class MySQLTest extends TestCase
+class PdoTest extends TestCase
 {
 
     // ------------------------------------------------------------------------------
