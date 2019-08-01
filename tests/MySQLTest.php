@@ -1,18 +1,18 @@
 <?php namespace GodTests;
 
 use God\God;
-use God\Persist\Adapter\PDO\AdapterFiltered as Adapter;
+use God\Persist\Adapter\MySQL\AdapterFiltered as Adapter;
 use PHPUnit\Framework\TestCase;
 
 /**
  * ------------------------------------------------------------------------------------
- * God PDO Adapter Test
+ * God MySQL Adapter Test
  * ------------------------------------------------------------------------------------
  *
  * @author lanlin
  * @change 2019/07/31
  */
-class PdoTest extends TestCase
+class MySQLTest extends TestCase
 {
 
     // ------------------------------------------------------------------------------
@@ -24,17 +24,20 @@ class PdoTest extends TestCase
      */
     public function getDB()
     {
-        $dbHost   = "localhost";
-        $dbName   = "database_name";
-        $username = "username";
-        $password = "password";
+        $dbHost   = "192.168.0.133";
+        $dbPort   = 3306;
+        $dbName   = "rap_db";
+        $username = "root";
+        $password = "I6NM*2Jft1DVex5WRn!nU!@Vwg*s2evJ";
 
         try
         {
-            return new \PDO("mysql:host={$dbHost};dbname={$dbName}", $username, $password);
+            return new \PDO("mysql:host={$dbHost};port={$dbPort};dbname={$dbName}", $username, $password);
         }
         catch (\Exception $e)
         {
+            echo $e->getMessage() . "\n\n";
+
             self::fail('Unable to connect to Database');
         }
     }

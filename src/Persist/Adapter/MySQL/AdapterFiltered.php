@@ -1,4 +1,4 @@
-<?php namespace God\Persist\Adapter\PDO;
+<?php namespace God\Persist\Adapter\MySQL;
 
 use God\Model\Model;
 use God\Exception\GodException;
@@ -6,7 +6,7 @@ use God\Persist\AdapterFiltered as AdapterFilteredInterface;
 
 /**
  * ------------------------------------------------------------------------------------
- * God PDO Drivers Adapter Filtered
+ * God MySQL Adapter Filtered
  * ------------------------------------------------------------------------------------
  *
  * @link https://www.php.net/manual/en/pdo.drivers.php

@@ -1,4 +1,4 @@
-<?php namespace God\Persist\Adapter\PDO;
+<?php namespace God\Persist\Adapter\MySQL;
 
 use God\Model\Model;
 use God\Config\Consts;
@@ -9,7 +9,7 @@ use God\Persist\Adapter as AdapterInterface;
 
 /**
  * ------------------------------------------------------------------------------------
- * God PDO Drivers Adapter
+ * God MySQl Adapter
  * ------------------------------------------------------------------------------------
  *
  * @link https://www.php.net/manual/en/pdo.drivers.php
@@ -51,7 +51,7 @@ class Adapter implements AdapterInterface
 
         try
         {
-            $this->pdo->query("SELECT 1 FROM {$this->table} LIMIT 1");
+            $this->pdo->query("SELECT 1 FROM `{$this->table}` LIMIT 1");
         }
         catch (\Throwable $e)
         {
@@ -70,7 +70,7 @@ class Adapter implements AdapterInterface
     {
         if (!$this->pdo)
         {
-            throw new GodException('php pdo handler required');
+            throw new GodException('mysql handler required');
         }
 
         $this->loadPolicyDB($model);
@@ -87,7 +87,7 @@ class Adapter implements AdapterInterface
     {
         if (!$this->pdo)
         {
-            throw new GodException('php pdo handler cannot be empty');
+            throw new GodException('mysql handler cannot be empty');
         }
 
         // empty dollection first
@@ -235,7 +235,7 @@ class Adapter implements AdapterInterface
 
             foreach ($data as $row)
             {
-                $stmt->execute($row);
+                $stmt->execute(array_values($row));
             }
 
             $this->pdo->commit();
@@ -246,25 +246,6 @@ class Adapter implements AdapterInterface
 
             throw new GodException($e->getMessage());
         }
-    }
-
-    // ------------------------------------------------------------------------------
-
-    /**
-     * get insert prepare
-     *
-     * @return \PDOStatement
-     */
-    private function getInsertPrepare() : \PDOStatement
-    {
-        $fields = implode(', ', Fields::FIELDS);
-
-        $values = array_fill(0, count(Fields::FIELDS), '?');
-        $values = implode(', ', $values);
-
-        $sql = "INSERT INTO `{$this->table}` ({$fields}) VALUES ({$values})";
-
-        return $this->pdo->prepare($sql);
     }
 
     // ------------------------------------------------------------------------------
@@ -293,6 +274,32 @@ class Adapter implements AdapterInterface
     // ------------------------------------------------------------------------------
 
     /**
+     * get insert prepare
+     *
+     * @return \PDOStatement
+     */
+    private function getInsertPrepare() : \PDOStatement
+    {
+        $values = array_fill(0, count(Fields::FIELDS), '?');
+        $values = implode(', ', $values);
+
+        $fields = [];
+
+        foreach (Fields::FIELDS as $field)
+        {
+            $fields[] = "`{$field}`";
+        }
+
+        $fields = implode(', ', $fields);
+
+        $sql = "INSERT INTO `{$this->table}` ({$fields}) VALUES ({$values})";
+
+        return $this->pdo->prepare($sql);
+    }
+
+    // ------------------------------------------------------------------------------
+
+    /**
      * table construct sql for pdo db (exp: mysql)
      *
      * @return string
@@ -308,10 +315,15 @@ class Adapter implements AdapterInterface
 
         $fieldsString = implode(",\n", $fields);
 
-        return "CREATE TABLE {$this->table} (
+        return
+        "CREATE TABLE `{$this->table}` (
             `id` INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
             {$fieldsString}
-        )";
+        )
+        ENGINE = 'InnoDB'
+        CHARACTER SET = 'utf8'
+        COLLATE = 'utf8_general_ci'
+        COMMENT = 'this is the god adapter policy table'";
     }
 
     // ------------------------------------------------------------------------------
