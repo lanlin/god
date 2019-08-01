@@ -25,7 +25,7 @@ class Internal extends Core
      */
     protected function addPolicyInternal(string $sec, string $ptype, array $rule) : bool
     {
-        if (!$this->adapter && $this->autoSave)
+        if ($this->adapter && $this->autoSave)
         {
             try
             {
@@ -58,7 +58,7 @@ class Internal extends Core
     protected function removePolicyInternal(string $sec, string $ptype, array $rule) : bool
     {
 
-        if (!$this->adapter && $this->autoSave)
+        if ($this->adapter && $this->autoSave)
         {
             try
             {
@@ -93,7 +93,7 @@ class Internal extends Core
     {
         $fieldValues = is_array($fieldValues[0]) ? $fieldValues[0] : $fieldValues;
 
-        if (!$this->adapter && $this->autoSave)
+        if ($this->adapter && $this->autoSave)
         {
             try
             {
